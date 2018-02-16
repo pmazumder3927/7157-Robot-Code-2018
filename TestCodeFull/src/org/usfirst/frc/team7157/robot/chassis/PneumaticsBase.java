@@ -18,7 +18,6 @@ public class PneumaticsBase {
 	}
 	
 	public void ToggleShooterAngle(boolean toggle) {
-		boolean up = toggle;
 		if (toggle) {
 			shooterSolenoidLeft.set(Value.kForward);
 		}

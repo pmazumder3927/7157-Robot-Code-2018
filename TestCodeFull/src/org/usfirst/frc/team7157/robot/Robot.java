@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import org.usfirst.frc.team7157.*;
 import org.usfirst.frc.team7157.robot.drivetrain.Drive;
+import org.usfirst.frc.team7157.robot.intake.Main;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	
 	public Drive drive = new Drive();
+	org.usfirst.frc.team7157.robot.intake.Main Intake = new Main();
 	public static OI oi = new OI();
     /**
      * This function is run when the robot is first started up and should be
@@ -21,6 +23,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	drive.DriveInit();
+    	assignButtons();
     }
 
     /**
@@ -40,5 +43,11 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	// TODO Auto-generated method stub
     	super.autonomousPeriodic();
+    }
+    
+    public void assignButtons() {
+    	if (oi.m_operateStick.getRawButtonPressed(3)) {
+    		Intake.SetIntake(true);
+    	}
     }
 }
