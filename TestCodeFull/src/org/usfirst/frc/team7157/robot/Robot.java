@@ -4,7 +4,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import org.usfirst.frc.team7157.*;
 import org.usfirst.frc.team7157.robot.drivetrain.Drive;
+<<<<<<< HEAD
 import org.usfirst.frc.team7157.robot.intake.Main;
+=======
+import org.usfirst.frc.team7157.robot.shooter.Main;
+>>>>>>> 5b62f40eddb3c8fcfd882746a4b68a34f0df5939
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -17,13 +21,18 @@ public class Robot extends IterativeRobot {
 	public Drive drive = new Drive();
 	org.usfirst.frc.team7157.robot.intake.Main Intake = new Main();
 	public static OI oi = new OI();
+	public org.usfirst.frc.team7157.robot.shooter.Main Shooter = new Main();
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
     	drive.DriveInit();
+<<<<<<< HEAD
     	assignButtons();
+=======
+    	Shooter.ShooterInit();
+>>>>>>> 5b62f40eddb3c8fcfd882746a4b68a34f0df5939
     }
 
     /**
@@ -46,8 +55,21 @@ public class Robot extends IterativeRobot {
     }
     
     public void assignButtons() {
+<<<<<<< HEAD
     	if (oi.m_operateStick.getRawButtonPressed(3)) {
     		Intake.SetIntake(true);
     	}
+=======
+    	if(oi.m_driveStick.getRawButton(0)) {
+    		Shooter.RevWheels(543);
+    	}
+    	if(oi.m_driveStick.getRawButton(1)) {
+    		
+    	}
+    	if(oi.m_driveStick.getRawButton(2)) {
+    		
+    	}
+    	
+>>>>>>> 5b62f40eddb3c8fcfd882746a4b68a34f0df5939
     }
 }
