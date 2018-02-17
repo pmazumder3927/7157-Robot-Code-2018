@@ -1,5 +1,7 @@
 package org.usfirst.frc.team7157.robot;
 
+import org.usfirst.frc.team7157.auto.Main;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -7,12 +9,15 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
+	org.usfirst.frc.team7157.auto.Main autoMain = new Main();
+	boolean auto;
 	Compressor c;
 	/* talons for arcade drive */
 	WPI_TalonSRX _frontLeftMotor = new WPI_TalonSRX(10); 		/* device IDs here (1 of 2) */
@@ -20,6 +25,7 @@ public class Robot extends IterativeRobot {
 	double speed = 1;
 	/* extra talons for six motor drives */
 	DoubleSolenoid shooterAngle;
+	Solenoid intakeRamp;
 	WPI_TalonSRX _leftSlave1 = new WPI_TalonSRX(11);
 	WPI_TalonSRX _rightSlave1 = new WPI_TalonSRX(12);
 	WPI_TalonSRX shooterTalon = new WPI_TalonSRX(20);
@@ -39,6 +45,10 @@ public class Robot extends IterativeRobot {
     	//_drive = new DifferentialDrive(_frontLeftMotor, _frontRightMotor);
     }
     public void teleopInit() {
+    	if (auto) {
+    		autoMain.autonteleopInit();
+    		return;
+    	}
     	shooterSpark = new Spark(0);
     	shooterSpark2 = new Spark(3);
     	shooterAngle = new DoubleSolenoid(0, 3);
@@ -49,12 +59,16 @@ public class Robot extends IterativeRobot {
     	shooterSlave.follow(shooterTalon);
     	_drive = new DifferentialDrive(_frontLeftMotor, _frontRightMotor);
     	c = new Compressor(0);
+    	intakeRamp = new Solenoid(4);
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	if (auto) {
+    		autoMain.autonpPeriodic();
+    	}
     	SmartDashboard.putNumber("intakeSpeed", speed);
     	_drive.arcadeDrive(_joy.getY(), _joy.getZ());
     	speed = _joy.getRawAxis(3);
@@ -86,6 +100,9 @@ public class Robot extends IterativeRobot {
     	
     	if (_joy.getRawButtonPressed(11)) {
     		c.setClosedLoopControl(!c.getClosedLoopControl());
+    	}
+    	if (_joy.getRawButton(13)) {
+    		intakeRamp.set(true);
     	}
     		
     }
