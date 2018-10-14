@@ -116,7 +116,6 @@ public class Robot extends TimedRobot {
 		OI.driveR.update();
 		OI.operateStick.update();
 		Input();
-		Scheduler.getInstance().run();
 	});
 
 	/**
@@ -243,8 +242,6 @@ public class Robot extends TimedRobot {
 		OI.driveL.setPlay(currentAuto);
 		OI.driveR.setPlay(currentAuto);
 		OI.operateStick.setPlay(currentAuto);
-	}
-	else {
 		autoNotifier.startPeriodic(0.05);
 	}
 	autoTime.reset();
@@ -257,13 +254,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		if (baseline) baselinePeriodic();
-		else {
-			OI.driveL.update();
-			OI.driveR.update();
-			OI.operateStick.update();
-			Input();
-			Scheduler.getInstance().run();
-		}
 	}
 	
 
